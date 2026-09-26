@@ -1,5 +1,8 @@
 import type { Asset, Person, Ticket } from "@/types";
 
+// Frontend prototype data only. These records are local examples and are not
+// loaded from or saved to a database, API, or other backend service.
+
 export const tickets: Ticket[] = [
  {id:"INC-2026-00128",title:"Notebook cannot boot after Windows update",requester:"Somchai Jaidee",department:"Accounting",category:"Hardware",priority:"P2 High",status:"In Progress",assignee:"Nattapon Wongchai",sla:"01:24",created:"Today 09:42",updated:"5 min ago",description:"The notebook restarted after the latest Windows update and now stops at a black screen before sign-in.",asset:"AST-NB-0042",location:"Bangkok HQ"},
  {id:"INC-2026-00127",title:"Wi-Fi disconnects in Meeting Room B",requester:"พิมพ์ชนก ศรีสุข",department:"Sales",category:"Network",priority:"P1 Critical",status:"Assigned",assignee:"Krit Sutham",sla:"00:18",created:"Today 09:31",updated:"8 min ago",description:"Video calls disconnect every few minutes in Meeting Room B on floor 8.",location:"Bangkok HQ"},
