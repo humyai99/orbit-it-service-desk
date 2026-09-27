@@ -32,10 +32,12 @@ npm run dev
 
 - ไปยังหน้าต่าง ๆ และดูข้อมูล Ticket, Asset และ User ตัวอย่าง
 - ค้นหาข้อมูลตัวอย่างผ่าน Global Search (`Ctrl+K` หรือ `Cmd+K`)
-- เปิดรายละเอียด Ticket/Asset, เปลี่ยนแท็บ และทดลองขั้นตอน Create Ticket
+- กรอง เรียงลำดับ และแบ่งหน้ารายการ Ticket/Asset; เปิด URL รายละเอียด Ticket/Asset โดยตรงได้
+- สร้าง Ticket ผ่านแบบฟอร์ม 4 ขั้นตอน เลือก Asset/Location ตรวจทานข้อมูล แล้วเปิด Ticket ที่สร้างใหม่
+- เปลี่ยนสถานะ/ผู้รับผิดชอบ และเพิ่มข้อความตอบกลับหรือบันทึกภายใน โดยรายการและหน้ารายละเอียดจะแสดงข้อมูลตรงกันระหว่างเซสชัน
 - สลับ Light/Dark Mode และทดลองหน้าจอขนาดมือถือ
 
-Mock Data อยู่ที่ [`data/mock/index.ts`](data/mock/index.ts), Type อยู่ที่ [`types/index.ts`](types/index.ts) และหน้าจอหลักอยู่ที่ [`features/portal/app.tsx`](features/portal/app.tsx) บางปุ่มเป็น UI Placeholder สำหรับ Phase ถัดไปและยังไม่บันทึกข้อมูล
+Mock Data อยู่ที่ [`data/mock/index.ts`](data/mock/index.ts), Type อยู่ที่ [`types/index.ts`](types/index.ts) และหน้าจอหลักอยู่ที่ [`features/portal/app.tsx`](features/portal/app.tsx) บางปุ่มเป็น UI Placeholder สำหรับ Phase ถัดไปและยังไม่บันทึกข้อมูล ไฟล์แนบในขั้นตอนสร้าง Ticket แสดงเพียงชื่อไฟล์ ไม่มีการอัปโหลดหรือเก็บไฟล์จริง
 
 ## ตรวจสอบ Build
 
