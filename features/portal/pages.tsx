@@ -4,7 +4,9 @@ import { useState } from "react";
 import { AlertTriangle, BookOpen, HardDrive, Plus, Search } from "lucide-react";
 import { toast } from "sonner";
 import { knowledge, people } from "@/data/mock";
+import { KnowledgeArticle } from "@/features/knowledge/articles";
 import type { Ticket } from "@/types";
+import { slaState } from "@/lib/service-desk";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,7 +18,7 @@ const slaMinutes = (value: string) => { const match = value.match(/^(\d+):(\d+)$
 
 export function Dashboard({ tickets, onTicket, onCreate, onAllTickets }: { tickets: Ticket[]; onTicket: (ticket: Ticket) => void; onCreate: () => void; onAllTickets: () => void }) {
   const open = tickets.filter(ticket => !["Resolved", "Closed"].includes(ticket.status));
-  const risks = open.filter(ticket => slaMinutes(ticket.sla) < 120).sort((a, b) => slaMinutes(a.sla) - slaMinutes(b.sla));
+  const risks = open.filter(ticket => slaState(ticket).risk).sort((a, b) => slaMinutes(a.sla) - slaMinutes(b.sla));
   const recent = [...tickets].sort((a, b) => b.id.localeCompare(a.id)).slice(0, 5);
   return <>
     <PageHeader eyebrow="IT Operations" title="Good morning, Nattapon" description="Service Desk overview · sample records" actions={<Button onClick={onCreate}><Plus className="size-4" />Create Ticket</Button>} />
@@ -43,8 +45,8 @@ export function UsersPage() {
 
 export function KnowledgePage() {
   const [query, setQuery] = useState("");
-  const found = knowledge.filter(article => `${article.title} ${article.category} ${article.description}`.toLocaleLowerCase().includes(query.toLocaleLowerCase()));
-  return <><div className="mb-7 rounded-2xl border bg-card py-12 text-center"><BookOpen className="mx-auto size-8 text-primary" /><h1 className="mt-3 text-3xl font-semibold">How can we help?</h1><div className="relative mx-auto mt-5 max-w-xl px-4"><Search className="absolute left-8 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" /><Input value={query} onChange={event => setQuery(event.target.value)} className="h-12 pl-12" placeholder="Search Knowledge Base" /></div></div><div className="grid gap-4 md:grid-cols-2">{found.map(article => <article key={article.title} className="rounded-xl border bg-card p-5"><ToneBadge value={article.category} /><h2 className="mt-3 font-semibold">{article.title}</h2><p className="mt-2 text-sm leading-6 text-muted-foreground">{article.description}</p><p className="mt-4 text-xs text-muted-foreground">{article.views} views · {article.updated}</p></article>)}{!found.length && <p className="text-sm text-muted-foreground">No articles match your search.</p>}</div></>;
+  const found = knowledge.filter(article => `${article.title} ${article.category} ${article.description} ${article.keywords.join(" ")}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
+  return <><div className="mb-7 rounded-2xl border bg-card py-8 text-center"><BookOpen className="mx-auto size-8 text-primary" /><h1 className="mt-3 text-3xl font-semibold">Knowledge Base</h1><p className="mt-2 text-sm text-muted-foreground">Try a guide before creating a ticket.</p><div className="relative mx-auto mt-5 max-w-xl px-4"><Search className="absolute left-8 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" /><Input aria-label="Search Knowledge Base" value={query} onChange={event => setQuery(event.target.value)} className="h-12 pl-12" placeholder="Search Knowledge Base" /></div></div><p className="mb-4 text-sm text-muted-foreground">{found.length} {found.length === 1 ? "guide" : "guides"} · Demo content</p><div className="grid gap-4 md:grid-cols-2">{found.map(article => <KnowledgeArticle key={article.title} article={article} />)}{!found.length && <p className="text-sm text-muted-foreground">No guides match your search. Try another term or create a ticket.</p>}</div></>;
 }
 
 export function ReportsPage() {
